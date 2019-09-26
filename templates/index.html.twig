@@ -10,20 +10,23 @@
 
 <main role="main" class="container">
     <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
+        <h1>OCR visualiser</h1>
         <p>
             {{ form_start(formUpload) }}
             {{ form_row(formUpload) }}
             <button>Upload</button>
             {{ form_end(formUpload) }}
         </p>
-
+        <hr>
         <p>
             {{ form_start(formFiles) }}
             {{ form_row(formFiles.fileList) }}
             {{ form_row(formFiles.ocrEngine) }}
             {{ form_row(formFiles.formatType) }}
-            <button>Convert to text</button>
+            {{ form_row(formFiles.ocrWord) }}
+            {{ form_row(formFiles.ocrLine) }}
+            {{ form_row(formFiles.ocrParagraph) }}
+            <button>Convert</button>
             {{ form_end(formFiles) }}
         </p>
 

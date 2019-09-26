@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Helper\DomParser;
 use App\OCR\Tesseract;
 use App\Service\FileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,24 +29,25 @@ class DefaultController extends AbstractController
      * @var Tesseract
      */
     private $tesseract;
+    /**
+     * @var DomParser
+     */
+    private $domParser;
 
-    public function __construct(FileService $fileService, Tesseract $tesseract)
+    public function __construct(FileService $fileService, Tesseract $tesseract, DomParser $domParser)
     {
         $this->fileService = $fileService;
         $this->tesseract = $tesseract;
+        $this->domParser = $domParser;
     }
 
     public function index(Request $request )
     {
-        ini_set('xdebug.var_display_max_depth', '10');
-        ini_set('xdebug.var_display_max_children', '256');
-        ini_set('xdebug.var_display_max_data', '10024');
-
         $parsedText = '';
-//
-//        $imagePath = $this->getParameter('kernel.project_dir') . '/public/img/';
-          $uploadPath = $this->getParameter('document_directory');
-//        $pdfPath = $this->getParameter('pdf_path');
+
+        //$imagePath = $this->getParameter('kernel.project_dir') . '/public/img/';
+        $uploadPath = $this->getParameter('document_directory');
+        //$pdfPath = $this->getParameter('pdf_path');
 
         $formUpload = $this->createForm(UploadType::class);
         $formFiles = $this->createForm(ConvertType::class);
@@ -70,17 +72,17 @@ class DefaultController extends AbstractController
         if ($formFiles->isSubmitted() && $formFiles->isValid()) {
             $file = $formFiles['fileList']->getData();
             $formatType = $formFiles['formatType']->getData();
+            $ocrWord = $formFiles['ocrWord']->getData();
+            $ocrLine = $formFiles['ocrLine']->getData();
+            $ocrParagraph = $formFiles['ocrParagraph']->getData();
 
             if ($file) {
-                if ($formatType==0) {$formatType='hocr'; };
-
-                if ($formatType==1) $formatType='txt';
-
                 $this->tesseract->setOutputFormat($formatType);
                 $parsedText = $this->tesseract->processImage($file->getFullPath());
 
-                //$domResult = $this->domParser->scrapeLineByWord($parsedText, 'Sygnatura');
-                //$domResult = $this->domParser->drawBoxesOnImage($parsedText, $file);
+                if ($ocrWord || $ocrLine || $ocrParagraph) {
+                    $this->domParser->drawBoxesOnImage($parsedText, $file, $ocrWord, $ocrLine, $ocrParagraph);
+                }
             }
         }
 

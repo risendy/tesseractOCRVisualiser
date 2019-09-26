@@ -16,7 +16,7 @@ class UploadType extends AbstractType
     {
         $builder
             ->add('document', FileType::class, [
-                'label' => 'Document',
+                'label' => '',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
