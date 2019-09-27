@@ -50,7 +50,7 @@ class DomParser
         return $sentence;
     }
 
-    public function drawBoxesOnImage($hocr, $file, $ocrWord, $ocrLine, $ocrParagraph)
+    public function drawBoxesOnImage($hocr, $file, $ocrWord, $ocrLine, $ocrParagraph, $ocrWordsOver)
     {
         $imagePath = $this->params->get('kernel.project_dir') . '/public/img/';
 
@@ -99,6 +99,25 @@ class DomParser
                 $splittedCoordinates = explode(' ', $boxCoorinates);
 
                 $draw->rectangle($splittedCoordinates[1], $splittedCoordinates[2], $splittedCoordinates[3], $splittedCoordinates[4]);
+            }
+        }
+
+        if ($ocrWordsOver) {
+            $draw->setFontSize( 12 );
+            $draw->setStrokeWidth(1);
+
+            foreach ($words as $a) {
+                $boxCoorinates = $a->getTag()->getAttribute('title')['value'];
+                $text = $a->firstChild()->text;
+
+                $splitted = explode(';', $boxCoorinates);
+
+                $splittedCoordinates = explode(' ', $splitted[0]);
+
+                $x1 = $splittedCoordinates[1];
+                $y1 = $splittedCoordinates[2];
+
+                $imagick->annotateImage($draw, $x1, $y1-3, 0, $text);
             }
         }
 

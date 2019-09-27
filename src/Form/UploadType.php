@@ -32,6 +32,7 @@ class UploadType extends AbstractType
                         'maxSize' => '4096k',
                         'mimeTypes' => [
                             'image/jpeg',
+                            'image/png',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid document image',
                     ])

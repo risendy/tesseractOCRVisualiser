@@ -16,7 +16,6 @@ class Tesseract
     public function __construct()
     {
         $this->tesseract = new TesseractOCR;
-        $this->tesseract->lang('pol');
     }
 
     public function processImage($path) {

@@ -55,6 +55,11 @@ class ConvertType extends AbstractType
             'label'    => 'Show ocrParagraph bounding boxes',
             'required' => false,
         ]);
+
+        $builder->add('ocrWordsOver', CheckboxType::class, [
+            'label'    => 'Display recognised phrases over text',
+            'required' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -75,13 +75,14 @@ class DefaultController extends AbstractController
             $ocrWord = $formFiles['ocrWord']->getData();
             $ocrLine = $formFiles['ocrLine']->getData();
             $ocrParagraph = $formFiles['ocrParagraph']->getData();
+            $ocrWordsOver = $formFiles['ocrWordsOver']->getData();
 
             if ($file) {
                 $this->tesseract->setOutputFormat($formatType);
                 $parsedText = $this->tesseract->processImage($file->getFullPath());
 
-                if ($ocrWord || $ocrLine || $ocrParagraph) {
-                    $this->domParser->drawBoxesOnImage($parsedText, $file, $ocrWord, $ocrLine, $ocrParagraph);
+                if ($ocrWord || $ocrLine || $ocrParagraph || $ocrWordsOver) {
+                    $this->domParser->drawBoxesOnImage($parsedText, $file, $ocrWord, $ocrLine, $ocrParagraph, $ocrWordsOver);
                 }
             }
         }
