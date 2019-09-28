@@ -10,6 +10,8 @@
 Application which aims to visualise how OCR work (using tessaract OCR library and its HOCR output format).
 
 ## Requirements
+* PHP 7.3+
+* mySQL Database
 * Tesseract Open Source OCR Engine - https://github.com/tesseract-ocr/tesseract
 * ImageMagick
 * PHP imagick module
@@ -24,6 +26,7 @@ Project is created with:
 ## Features
 * Displaying tessaractOCR bounding boxes on image (words, lines, paragraphs)
 * Displaying recognised phrases over text on image
+* Customisation of draw parameters - changing bounding box stroke color, font-size etc
 
 ## Installation
 #### Clone the repository

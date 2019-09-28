@@ -50,7 +50,7 @@ class DomParser
         return $sentence;
     }
 
-    public function drawBoxesOnImage($hocr, $file, $ocrWord, $ocrLine, $ocrParagraph, $ocrWordsOver)
+    public function drawBoxesOnImage($hocr, $file, $ocrWord, $ocrLine, $ocrParagraph, $boundingBoxColorWord, $boundingBoxColorLine, $boundingBoxColorParagraph, $ocrWordsOver, $ocrWordsOverColor, $fontSize)
     {
         $imagePath = $this->params->get('kernel.project_dir') . '/public/img/';
 
@@ -60,8 +60,8 @@ class DomParser
         $strokeColorOuter = new \ImagickPixel('rgb(0, 0, 0)');
         $fillColor = new \ImagickPixel('none');
         $draw->setFillColor($fillColor);
-        $draw->setStrokeWidth(1);
         $draw->setStrokeColor($strokeColorOuter);
+        $draw->setStrokeWidth(2);
         $draw->setStrokeOpacity(1);
 
         $dom = new Dom;
@@ -72,6 +72,9 @@ class DomParser
         $paragraphs = $dom->find('.ocr_par');
 
         if ($ocrWord) {
+            $boundingBoxColorWord = new \ImagickPixel($boundingBoxColorWord);
+            $draw->setStrokeColor($boundingBoxColorWord);
+
             foreach ($words as $a) {
                 $boxCoorinates = $a->getTag()->getAttribute('title')['value'];
 
@@ -83,6 +86,9 @@ class DomParser
         }
 
         if ($ocrLine){
+            $boundingBoxColorLine = new \ImagickPixel($boundingBoxColorLine);
+            $draw->setStrokeColor($boundingBoxColorLine);
+
             foreach ($lines as $a) {
                 $boxCoorinates = $a->getTag()->getAttribute('title')['value'];
 
@@ -94,6 +100,9 @@ class DomParser
         }
 
         if ($ocrParagraph) {
+            $boundingBoxColorParagraph = new \ImagickPixel($boundingBoxColorParagraph);
+            $draw->setStrokeColor($boundingBoxColorParagraph);
+
             foreach ($paragraphs as $b) {
                 $boxCoorinates = $b->getTag()->getAttribute('title')['value'];
                 $splittedCoordinates = explode(' ', $boxCoorinates);
@@ -103,8 +112,12 @@ class DomParser
         }
 
         if ($ocrWordsOver) {
-            $draw->setFontSize( 12 );
+            $strokeColorOuter = new \ImagickPixel($ocrWordsOverColor);
+
+            $draw->setFontSize($fontSize);
             $draw->setStrokeWidth(1);
+            $draw->setStrokeColor($ocrWordsOverColor);
+            $draw->setFillColor($ocrWordsOverColor);
 
             foreach ($words as $a) {
                 $boxCoorinates = $a->getTag()->getAttribute('title')['value'];

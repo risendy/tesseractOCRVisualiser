@@ -76,13 +76,18 @@ class DefaultController extends AbstractController
             $ocrLine = $formFiles['ocrLine']->getData();
             $ocrParagraph = $formFiles['ocrParagraph']->getData();
             $ocrWordsOver = $formFiles['ocrWordsOver']->getData();
+            $ocrWordsOverColor = $formFiles['ocrWordsColor']->getData();
+            $ocrWordsFontSize = $formFiles['ocrWordsFontSize']->getData();
+            $boundingBoxColorWord = $formFiles['boundingBoxColorWord']->getData();
+            $boundingBoxColorLine = $formFiles['boundingBoxColorLine']->getData();
+            $boundingBoxColorParagraph = $formFiles['boundingBoxColorParagraph']->getData();
 
             if ($file) {
                 $this->tesseract->setOutputFormat($formatType);
                 $parsedText = $this->tesseract->processImage($file->getFullPath());
 
                 if ($ocrWord || $ocrLine || $ocrParagraph || $ocrWordsOver) {
-                    $this->domParser->drawBoxesOnImage($parsedText, $file, $ocrWord, $ocrLine, $ocrParagraph, $ocrWordsOver);
+                    $this->domParser->drawBoxesOnImage($parsedText, $file, $ocrWord, $ocrLine, $ocrParagraph, $boundingBoxColorWord, $boundingBoxColorLine, $boundingBoxColorParagraph, $ocrWordsOver, $ocrWordsOverColor, $ocrWordsFontSize);
                 }
             }
         }

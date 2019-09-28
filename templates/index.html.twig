@@ -9,6 +9,7 @@
 </nav>
 
 <main role="main" class="container">
+    <div id="app">
     <div class="starter-template">
         <h1>OCR visualiser</h1>
         <p>
@@ -24,9 +25,14 @@
             {{ form_row(formFiles.ocrEngine) }}
             {{ form_row(formFiles.formatType) }}
             {{ form_row(formFiles.ocrWord) }}
+            {{ form_row(formFiles.boundingBoxColorWord) }}
             {{ form_row(formFiles.ocrLine) }}
+            {{ form_row(formFiles.boundingBoxColorLine) }}
             {{ form_row(formFiles.ocrParagraph) }}
+            {{ form_row(formFiles.boundingBoxColorParagraph) }}
             {{ form_row(formFiles.ocrWordsOver) }}
+            {{ form_row(formFiles.ocrWordsColor) }}
+            {{ form_row(formFiles.ocrWordsFontSize) }}
             <button>Convert</button>
             {{ form_end(formFiles) }}
         </p>
@@ -34,6 +40,7 @@
         <p>
             {{ parsedText }}
         </p>
+    </div>
     </div>
 </main><!-- /.container -->
 {% endblock %}
