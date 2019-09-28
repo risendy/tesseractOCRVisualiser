@@ -7,23 +7,34 @@
 * [Screenshots](#screenshots)
 
 ## General info
-Appliation which aims to visualise how OCR work (using tessaract OCR library).
+Application which aims to visualise how OCR work (using tessaract OCR library and its HOCR output format).
 
 ## Requirements
+* Tesseract Open Source OCR Engine - https://github.com/tesseract-ocr/tesseract
+* ImageMagick
 * PHP imagick module
 	
 ## Technologies
 Project is created with:
 * Symfony 4
-* Imagick
+* Tesseract OCR for PHP - https://github.com/thiagoalessio/tesseract-ocr-for-php
+* Imagick/ImageMagick
 * PHPHtmlParser - https://github.com/paquettg/php-html-parser
 
 ## Features
-* Displaying tessaractOCR bouding boxes on image (words, lines, paragraphs)
+* Displaying tessaractOCR bounding boxes on image (words, lines, paragraphs)
 * Displaying recognised phrases over text on image
 
 ## Installation
 #### Clone the repository
+#### Install front-end dependencies
+```
+yarn install
+```
+#### Compile assets
+```
+yarn encore dev
+```
 #### Run composer
 ```
 composer install
